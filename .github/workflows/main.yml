@@ -17,7 +17,7 @@ jobs:
       run: |
         # configure git
         git config --global user.name "Continous Deployment"
-        git config --global user.email "test@robocupathome.org"
+        git config --global user.email "git@robocupathome.org"
         # setup ssh
         mkdir ~/.ssh
         chmod 700 ~/.ssh
@@ -27,7 +27,7 @@ jobs:
         git clone --depth=1 --branch gh-pages git@github.com:nickswalker/Rulebook.git "$GITHUB_WORKSPACE/deploy"
         cp -f Rulebook.pdf "$GITHUB_WORKSPACE/deploy/Rulebook.pdf"
         cd "$GITHUB_WORKSPACE/deploy"
-        git add Rulebook.pdf
+        git add -f Rulebook.pdf
         git commit -m "[github actions] deploy"
         git push
       env:
