@@ -31,9 +31,10 @@ jobs:
         git config --global core.sshCommand "ssh -i ~/.ssh/id_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
         git clone --depth=1 --branch gh-pages git@github.com:nickswalker/Rulebook.git "$GITHUB_WORKSPACE/deploy"
         mkdir -p "$GITHUB_WORKSPACE/deploy/rulebook"
-        cp -f Rulebook.pdf "$GITHUB_WORKSPACE/deploy/rulebook/$GITHUB_REF.pdf"
+        FILE_NAME=${GITHUB_REF//\//\_}.pdf
+        cp -f Rulebook.pdf "$GITHUB_WORKSPACE/deploy/rulebook/$FILE_NAME"
         cd "$GITHUB_WORKSPACE/deploy"
-        git add rulebook/$GITHUB_REF.pdf
+        git add rulebook/$FILE_NAME
         git commit -m "[github actions] deploy"
         git push
       env:
@@ -66,9 +67,10 @@ jobs:
         git config --global core.sshCommand "ssh -i ~/.ssh/id_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
         git clone --depth=1 --branch gh-pages git@github.com:nickswalker/Rulebook.git "$GITHUB_WORKSPACE/deploy"
         mkdir -p "$GITHUB_WORKSPACE/deploy/score_sheets"
-        cp -f Rulebook.pdf "$GITHUB_WORKSPACE/deploy/score_sheets/$GITHUB_REF.pdf"
+        FILE_NAME=${GITHUB_REF//\//\_}.pdf
+        cp -f score_sheets.pdf "$GITHUB_WORKSPACE/deploy/score_sheets/$FILE_NAME"
         cd "$GITHUB_WORKSPACE/deploy"
-        git add score_sheets/$GITHUB_REF.pdf
+        git add score_sheets/$FILE_NAME
         git commit -m "[github actions] deploy"
         git push
       env:
