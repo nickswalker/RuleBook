@@ -46,9 +46,9 @@ jobs:
         FILENAME=${GITHUB_REF/refs\/heads\//}
         # Strip out any extra slashes in the rest
         FILENAME=${FILENAME//\//\_}.pdf
-        cp -f Rulebook.pdf "$GITHUB_WORKSPACE/deploy/rulebook/$FILE_NAME"
+        cp -f Rulebook.pdf "$GITHUB_WORKSPACE/deploy/rulebook/$FILENAME"
         cd "$GITHUB_WORKSPACE/deploy"
-        git add rulebook/$FILE_NAME
+        git add rulebook/$FILENAME
         git commit -m "[github actions] deploy"
         git push
       env:
@@ -87,9 +87,9 @@ jobs:
         FILENAME=${GITHUB_REF/refs\/heads\//}
         # Strip out any extra slashes in the rest
         FILENAME=${FILENAME//\//\_}.pdf
-        cp -f score_sheets.pdf "$GITHUB_WORKSPACE/deploy/score_sheets/$FILE_NAME"
+        cp -f score_sheets.pdf "$GITHUB_WORKSPACE/deploy/score_sheets/$FILENAME"
         cd "$GITHUB_WORKSPACE/deploy"
-        git add score_sheets/$FILE_NAME
+        git add score_sheets/$FILENAME
         git commit -m "[github actions] deploy"
         git push
       env:
