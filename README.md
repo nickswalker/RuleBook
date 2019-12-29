@@ -1,6 +1,8 @@
 RuleBook for RoboCup @Home 2019
 ===============================
 
+![](https://github.com/RoboCupAtHome/RuleBook/workflows/CI/badge.svg?branch=master)
+
 The 2019 rulebook state is **FINAL**.
 
 Only spelling corrections and minor clarificatios may be merged from now on, as well as buffs to the scoresheets to enhance scoring.
