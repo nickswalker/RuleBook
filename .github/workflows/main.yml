@@ -35,7 +35,7 @@ jobs:
         # configure git
         git config --global user.name "Continuous Deployment"
         git config --global user.email "git@robocupathome.org"
-        git clone --depth=1 --branch gh-pages git@github.com:nickswalker/Rulebook.git "$GITHUB_WORKSPACE/deploy"
+        git clone --depth=1 --branch gh-pages git@github.com:$GITHUB_REPOSITORY.git "$GITHUB_WORKSPACE/deploy"
         mkdir -p "$GITHUB_WORKSPACE/deploy/rulebook"
         FILENAME=${GITHUB_REF/refs\/heads\//}
         # Strip out any extra slashes in the rest
@@ -51,7 +51,7 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: gh-pages
-        directory: ${{GITHUB_WORKSPACE}}/deploy
+        directory: ${{ github.workspace }}/deploy
   
   build-scoresheets:
 
