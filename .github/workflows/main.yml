@@ -19,9 +19,10 @@ jobs:
         name: rulebook
         path: Rulebook.pdf
     - name: Upload PDF to development site
+      if: github.ref == 'refs/heads/master'
       run: |
         # configure git
-        git config --global user.name "Continous Deployment"
+        git config --global user.name "Continuous Deployment"
         git config --global user.email "git@robocupathome.org"
         # setup ssh
         mkdir ~/.ssh
@@ -31,7 +32,9 @@ jobs:
         git config --global core.sshCommand "ssh -i ~/.ssh/id_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
         git clone --depth=1 --branch gh-pages git@github.com:nickswalker/Rulebook.git "$GITHUB_WORKSPACE/deploy"
         mkdir -p "$GITHUB_WORKSPACE/deploy/rulebook"
-        FILE_NAME=${GITHUB_REF//\//\_}.pdf
+        FILE_NAME=${GITHUB_REF/refs\/heads\//}
+        # Strip out any extra slashes in the rest
+        FILE_NAME=${FILENAME//\//\_}.pdf
         cp -f Rulebook.pdf "$GITHUB_WORKSPACE/deploy/rulebook/$FILE_NAME"
         cd "$GITHUB_WORKSPACE/deploy"
         git add rulebook/$FILE_NAME
@@ -55,9 +58,10 @@ jobs:
         name: score_sheets
         path: score_sheets.pdf
     - name: Upload PDF to development site
+      if: github.ref == 'refs/heads/master'
       run: |
         # configure git
-        git config --global user.name "Continous Deployment"
+        git config --global user.name "Continuous Deployment"
         git config --global user.email "git@robocupathome.org"
         # setup ssh
         mkdir ~/.ssh
@@ -67,7 +71,10 @@ jobs:
         git config --global core.sshCommand "ssh -i ~/.ssh/id_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
         git clone --depth=1 --branch gh-pages git@github.com:nickswalker/Rulebook.git "$GITHUB_WORKSPACE/deploy"
         mkdir -p "$GITHUB_WORKSPACE/deploy/score_sheets"
-        FILE_NAME=${GITHUB_REF//\//\_}.pdf
+        # Strip out leading part
+        FILE_NAME=${GITHUB_REF/refs\/heads\//}
+        # Strip out any extra slashes in the rest
+        FILE_NAME=${FILENAME//\//\_}.pdf
         cp -f score_sheets.pdf "$GITHUB_WORKSPACE/deploy/score_sheets/$FILE_NAME"
         cd "$GITHUB_WORKSPACE/deploy"
         git add score_sheets/$FILE_NAME
