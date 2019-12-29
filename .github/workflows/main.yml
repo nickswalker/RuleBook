@@ -47,6 +47,7 @@ jobs:
       env:
         DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
     - name: Push to GitHub Pages
+      if: github.ref == 'refs/heads/master'
       uses: ad-m/github-push-action@v0.5.0
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
