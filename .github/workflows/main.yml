@@ -29,19 +29,13 @@ jobs:
       with:
         name: rulebook
         path: Rulebook.pdf
-    - name: Upload PDF to development site
+    - name: Commit output to GitHub Pages
       if: github.ref == 'refs/heads/master'
       run: |
         # configure git
         git config --global user.name "Continuous Deployment"
         git config --global user.email "git@robocupathome.org"
-        # setup ssh
-        mkdir ~/.ssh
-        chmod 700 ~/.ssh
-        echo "$DEPLOY_KEY" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        git config --global core.sshCommand "ssh -i ~/.ssh/id_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
-        git clone --depth=1 --branch gh-pages git@github.com:nickswalker/Rulebook.git "$GITHUB_WORKSPACE/deploy"
+        git clone --depth=1 --branch gh-pages git@github.com:$GITHUB_REPOSITORY.git "$GITHUB_WORKSPACE/deploy"
         mkdir -p "$GITHUB_WORKSPACE/deploy/rulebook"
         FILENAME=${GITHUB_REF/refs\/heads\//}
         # Strip out any extra slashes in the rest
@@ -50,9 +44,15 @@ jobs:
         cd "$GITHUB_WORKSPACE/deploy"
         git add rulebook/$FILENAME
         git commit -m "[github actions] deploy"
-        git push
       env:
         DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+    - name: Push to GitHub Pages
+      if: github.ref == 'refs/heads/master'
+      uses: ad-m/github-push-action@v0.5.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: gh-pages
+        directory: ${{ github.workspace }}/deploy
   
   build-scoresheets:
 
