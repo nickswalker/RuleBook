@@ -3,6 +3,15 @@ name: CI
 on: [push]
 
 jobs:
+  lint:
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v1
+      - name: LaTeX linter (chktex)
+        uses: j2kun/chktex-action@v1.0.0
+        
   build-rulebook:
 
     runs-on: ubuntu-latest
@@ -42,6 +51,7 @@ jobs:
         git push
       env:
         DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+  
   build-scoresheets:
 
     runs-on: ubuntu-latest
